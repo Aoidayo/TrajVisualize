@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*WCVLT5Dp5oYAAAAAAAAAAAAADmJ7AQ/original">
+    <title>PyL7VP</title>
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="https://unpkg.com/antd@5.x/dist/reset.css"></link>
+    <link rel="stylesheet" href="https://unpkg.com/@antv/larkmap@1.x/dist/larkmap.min.css"></link>
+    <!-- JS Dependencies -->
+    <script type="text/javascript" crossorigin src="https://unpkg.com/lodash@4.x/lodash.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/react@18.x/umd/react.production.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/react-dom@18.x/umd/react-dom.production.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/dayjs@1.x/dayjs.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/antd@5.x/dist/antd.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@ant-design/icons@5.x/dist/index.umd.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/turf@3.x/turf.min.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/mapbox-gl@1.13.3/dist/mapbox-gl.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/l7@2.x/dist/l7.js"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/l7-draw@3.x"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/larkmap@1.x"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/li-sdk@1"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/li-core-assets@1"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/li-analysis-assets@1"></script>
+    <script type="text/javascript" crossorigin src="https://unpkg.com/@antv/li-editor@1"></script>
+    <script>
+      // 高德或 Mapbox 的 token，默认使用内置的 token，生产环境务必自行注册 Token 确保服务稳定!
+      const MAP_TOKEN = undefined // 替换为您申请的 token！
+      // 如果是高德，在2021年12月02日申请以后的 key 需要配合您的安全密钥一起使用
+      // window._AMapSecurityConfig = { securityJsCode: "替换为您申请的安全密钥！" }
+    </script>
+  </head>
+  <body>
+    <style>
+      div.pyl7vp-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      /* 地图版权遮挡控件问题 */
+      .amap-copyright {
+        left: 350px;
+      }
+    </style>
+
+    <div id="a056b0d3ec6b47d9a0bde7f21c20ed6a" class="pyl7vp-container"></div>
+
+    <!-- LI Assets -->
+    <script>
+      const { parseAssetPackage, parserDataWithGeo, isLocalDataset } = window.LISDK;
+      const assets = ["LICoreAssets", "LIAnalysisAssets"]
+        .map((global) => parseAssetPackage(global))
+        .filter((asset) => asset !== undefined);
+    </script>
+
+    <!-- LI Datasets -->
+    <script>
+      const LI_Datasets = [{"id": "my_dataset", "type": "local", "data": [{"longitude": 105.005, "latitude": 32.349, "mag": 5.2}, {"longitude": 104.602, "latitude": 32.067, "mag": 3.0}, {"longitude": 103.665, "latitude": 31.29, "mag": 6.0}, {"longitude": 105.275, "latitude": 32.416, "mag": 2.0}], "metadata": {"name": "my_dataset", "_autoCreateLayers": true}, "columns": []}]
+    </script>
+
+    <!-- LI ApplicationConfig -->
+    <script>
+    const LI_Config = {"version": "v0.1", "metadata": {"name": "PyL7VP"}, "datasets": [], "spec": {"map": {"basemap": "Gaode", "config": {"zoom": 3, "center": [120.153576, 30.287459], "pitch": 0, "bearing": 0, "style": "grey", "WebGLParams": {"preserveDrawingBuffer": true}}, "logoPosition": "leftbottom"}, "layers": [], "widgets": [{"id": "AnalysisLayout", "type": "AnalysisLayout", "metadata": {"name": "\u5e03\u5c40\u7ec4\u4ef6"}, "properties": {"showFloatPanel": false, "showSidePanel": false, "showBottomPanel": false}}, {"id": "AdministrativeSelectControl", "type": "AdministrativeSelectControl", "metadata": {"name": "\u884c\u653f\u533a\u57df\u9009\u62e9\u5668"}, "properties": {"position": "lefttop"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "LocationSearchControl", "type": "LocationSearchControl", "metadata": {"name": "\u4f4d\u7f6e\u67e5\u8be2"}, "properties": {"position": "lefttop"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "ZoomControl", "type": "ZoomControl", "metadata": {"name": "\u7f29\u653e\u5668"}, "properties": {"position": "bottomright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "PropertiesPanel", "type": "PropertiesPanel", "metadata": {"name": "\u5c5e\u6027\u9762\u677f"}, "properties": {"isOpen": false, "items": []}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "LayerPopup", "type": "LayerPopup", "metadata": {"name": "\u56fe\u5c42\u4fe1\u606f\u6846"}, "properties": {"isOpen": true, "trigger": "hover", "items": []}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "FullscreenControl", "type": "FullscreenControl", "metadata": {"name": "\u5730\u56fe\u5168\u5c4f"}, "properties": {"position": "topright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "MapViewSettingControl", "type": "MapViewSettingControl", "metadata": {"name": "\u5730\u56fe\u503e\u89d2"}, "properties": {"position": "topright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "LegendWidget", "type": "LegendWidget", "metadata": {"name": "\u56fe\u4f8b\u7ec4\u4ef6"}, "properties": {"position": "topright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "MapThemeControl", "type": "MapThemeControl", "metadata": {"name": "\u5730\u56fe\u4e3b\u9898"}, "properties": {"position": "bottomright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "MouseLocationControl", "type": "MouseLocationControl", "metadata": {"name": "\u5149\u6807\u7ecf\u7eac\u5ea6"}, "properties": {"position": "leftbottom"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "ScaleControl", "type": "ScaleControl", "metadata": {"name": "\u6bd4\u4f8b\u5c3a"}, "properties": {"position": "leftbottom"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}, {"id": "ea0b8946-3e3d-4a87-a4a0-5dd08e7a2eed", "type": "ExportImageControl", "metadata": {"name": "\u5bfc\u51fa\u56fe\u7247"}, "properties": {"position": "topright"}, "container": {"id": "AnalysisLayout", "slot": "controls"}}]}}
+    LI_Config.datasets = LI_Datasets.map(dataset => {
+      if (isLocalDataset(dataset)) {
+        return {...dataset, data: parserDataWithGeo(dataset.data)}
+      }
+
+      return dataset
+    })
+    if (MAP_TOKEN) LI_Config.spec.map.config.token = MAP_TOKEN
+    </script>
+
+     <!-- LI Theme -->
+    <script>
+      const LI_Theme = "light"
+      const _theme = window.antd.theme;
+      const _lightTheme = {
+        token: {
+          colorPrimary: "#8274FF",
+          colorInfo: "#8274FF",
+        },
+      }
+      const _darkTheme = {
+        algorithm: _theme.darkAlgorithm,
+        token: {
+          colorPrimary: "#8274FF",
+          colorTextBase: "rgba(255,255,255,0.85)",
+          colorBgBase: "#1d1e25",
+          colorInfo: "#8274FF",
+          borderRadius: 6,
+        },
+      }
+      const Antd_Theme = LI_Theme === "light" ? _lightTheme : _darkTheme
+    </script>
+
+    <!-- Render LI Editor -->
+    <script>
+      const { ConfigProvider, theme } = window.antd;
+      const { LocationInsightEditor } = window.LIEditor;
+
+      function LIEditorElement() {
+        const { token } = theme.useToken();
+        const inheritedStyle = { color: token.colorText, fontSize: token.fontSize, fontFamily: token.fontFamily, lineHeight: token.lineHeight, background: token.colorBgLayout, }
+
+        return React.createElement(LocationInsightEditor, {
+          assets,
+          defaultApplication: LI_Config,
+          style: { position: "relative", width: "100%", height: "100%", ...inheritedStyle, },
+        });
+      };
+
+      const App = React.createElement(ConfigProvider, { theme: Antd_Theme }, React.createElement(LIEditorElement, null));
+
+      ReactDOM.render(App, document.getElementById("a056b0d3ec6b47d9a0bde7f21c20ed6a"));
+    </script>
+    <!-- Google Analytics，用于调研分析 L7VP 使用情况，可以删掉 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N97Y9S4GLG" crossorigin></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-N97Y9S4GLG", { app_type: "pyl7vp-app" });
+    </script>
+    <!-- Baidu tongji，用于调研分析 L7VP 使用情况，可以删掉 -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c2b82edd7b45aa4aa6f9f31c1155db0f";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })()
+    </script>
+  </body>
+</html>
